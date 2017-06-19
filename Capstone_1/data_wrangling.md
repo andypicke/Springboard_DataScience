@@ -10,9 +10,9 @@ This document will eventually become part of your milestone report.
 
 ## Historical citibike data
 
-Historical usage data is made available in csv format by Citibike at <>. Each file contains one month of data, and data is available (as of xx) from xx to xx. Each data file contains the following fields:
+Historical usage data is made available in csv format by Citibike at <https://s3.amazonaws.com/tripdata/index.html>. Each file contains one month of data, and data is available (as of June 19, 2017) from July 2013 to March 2017. Each data file contains the following fields:
 
--Trip Duration (seconds)
+- Trip Duration (seconds)
 - Start Time and Date
 - Stop Time and Date
 - Start Station Name
@@ -26,8 +26,6 @@ Historical usage data is made available in csv format by Citibike at <>. Each fi
 
 This data has been processed to remove trips that are taken by staff as they service and inspect the system, trips that are taken to/from any of our “test” stations (which we were using more in June and July 2013), and any trips that were below 60 seconds in length (potentially false starts or users trying to re-dock a bike to ensure it's secure).
 
-Data files is downloaded w/ the script xx.py
-
 The data is cleaned and modified, and saved to a SQLite3 database in the script read_citibike_to_sql.ipynb
 
 Cleaning/modifications:
@@ -37,13 +35,10 @@ Cleaning/modifications:
 - starttime and stoptime variables are converted to datetime
 - New variables day, month, year, yday, wkday, hour are added
 
-Station-related variables (except id) are not saved with ride data .A separate table is made with info for unique stations.
-
-
+Station-related variables (except id) are not saved with ride data . A separate table is made with info for unique stations.
 
 
 ## Weather data
-
 
 Historical weather data for LaGuardia airport was downloaded from <https://www.wunderground.com/> and saved to a SQLite3 database.
 
@@ -54,12 +49,12 @@ Cleaning:
 - add fields yday, year, month?
 
 
-
 ## Holidays
 
-Data on US holidays was collected from ??, since I expect holidays to have a significant effect on Citibike usage.
+Data on US holidays will be collected from ??, since I expect holidays to have a significant effect on Citibike usage.
 
 
 ## Streaming citibike data
 
 Citibike also makes available streaming data on system status at <https://gbfs.citibikenyc.com/gbfs/en/station_status.json>. A script (read_citibike_streaming.py) was written to read this data, and a chron-job was set up to retrieve data every half hour. Data was saved to a sqlite3 database, and csv files were also saved locally.
+
