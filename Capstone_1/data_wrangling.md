@@ -40,13 +40,13 @@ Station-related variables (except id) are not saved with ride data . A separate 
 
 ## Weather data
 
-Historical weather data for LaGuardia airport was downloaded from <https://www.wunderground.com/> and saved to a SQLite3 database.
+Historical weather data for LaGuardia airport is downloaded from <https://www.wunderground.com/> and saved to a SQLite3 database with the script **get_weather_data.py**
 
-Cleaning:
-- bad values/outliers?
-- reduce # fields kept
-- rename variables
-- add fields yday, year, month?
+Cleaning/ Modifications:
+- Data is converted to datetime and set as index
+- Spaces in variable names replaced with underscores
+- Add fields yday, year, month
+- Keep only temperature weather fields
 
 
 ## Holidays
