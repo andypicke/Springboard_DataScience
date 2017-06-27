@@ -31,7 +31,7 @@ unzip \*.zip
 rm *.zip
 ```
 
-The total amount of data is too large to work with in memory, so a SQL database is used. The data in CSV files is cleaned, modified, and saved to a SQLite3 database in the script _read_citibike_to_sql.ipynb 
+The total amount of data is too large to work with in memory, so a SQL database is used. The data in CSV files is cleaned, modified, and saved to a SQLite3 database in the script _read_citibike_to_sql.ipynb_ . The complete database is approximately 3.7GB in size and contains over 39 million rows (rides).
 
 Cleaning/modifications:
 
