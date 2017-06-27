@@ -31,7 +31,7 @@ unzip \*.zip
 rm *.zip
 ```
 
-The total amount of data is too large to work with in memory, so a SQL database is used. The data in CSV files is cleaned, modified, and saved to a SQLite3 database in the script _read_citibike_to_sql.ipynb_ . The complete database is approximately 3.7GB in size and contains over 39 million rows (rides).
+The total amount of data is too large to work with in memory, so a SQL database is used. The data in CSV files is cleaned, modified, and saved to a SQLite3 database in the script _read_citibike_to_sql.ipynb_ . The complete database is approximately 3.7GB in size and contains over 39 million rows (rides). The data is farily clean to begin with, but some steps are taken.
 
 Cleaning/modifications:
 
@@ -41,6 +41,8 @@ Cleaning/modifications:
 - New variables _day_, _month_, _year_, _yday_, _wkday_, and _hour_ are computed from _starttime_ and added to enable easy sorting and grouping.
 
 Station-related variables except _id_ (name, lat,long ) are not saved in the table with ride data, in order to reduce the size. A separate table 'stations' is made with the info for unique stations, which can be joined to the 'rides' table using the station ID key if needed.
+
+Upon examining the rider age distribution, there appear to be a small number of incorrect values or typos. A very small fraction of riders have ages over 100, up to 159!. Since the [oldest living person](https://en.wikipedia.org/wiki/List_of_the_verified_oldest_people) is 116 it seems likely that these are mistakes in the data. Birth year, not age, was recorded, so my best guess is that 18 was intered instead of 19 for the beginning of some years (ie 1895 instead of 1995). These age values will be converted to NaN in the dataset.
 
 
 ## Weather data
