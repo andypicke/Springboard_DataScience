@@ -31,6 +31,12 @@ All the monthly files can be downloaded w/ the following command at the terminal
 aws s3 cp s3://tripdata . --recursive --exclude "*JC"
 ```
 
+Unzip all files and remove zip files w/:
+```
+unzip \*.zip
+rm *.zip
+```
+
 The data is cleaned and modified, and saved to a SQLite3 database in the script _read_citibike_to_sql.ipynb_
 
 Cleaning/modifications:
