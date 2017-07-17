@@ -21,15 +21,17 @@ def get_wea_data_yearly(year,station):
     dat['year'] = dat.date.dt.year
     dat.rename(columns=lambda x: x.replace(' ', '_'), inplace=True)
     dat['st_code'] = station
-    vars_to_keep = ['date','st_code','Max_TemperatureF','Min_TemperatureF','Mean_TemperatureF','year','yday','month']
+    vars_to_keep = ['date','st_code','Max_TemperatureF','Min_TemperatureF','Mean_TemperatureF','year','yday','month','PrecipitationIn','_CloudCover','_Max_Gust_SpeedMPH','_Events']
     dat = dat[vars_to_keep]
+    dat.rename(columns={'Max_TemperatureF':'max_temp','Min_TemperatureF':'min_temp','Mean_TemperatureF':'mean_temp','PrecipitationIn':'precip_In','_CloudCover':
+        'cloud_cover','_Max_Gust_SpeedMPH':'max_gust_mph','_Events':'events'},inplace=True)
 
     return dat
 
 # Write to databse
 con = sqlite3.connect("data/nyc_weather.db3")
 
-years = ['2014','2015','2016','2017']
+years = ['2013','2014','2015','2016','2017']
 # KGLA is code for LaGuardia airport
 for year in years:
     dat = get_wea_data_yearly(year,'KLGA')
