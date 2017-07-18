@@ -148,19 +148,19 @@ Findings:
 
 
 
-\begin{figure}[htbp]
+\begin{figure}[htb]
 \includegraphics[width=40pc]{rides_per_year.jpg}
 \caption{Total number of rides ( in millions) taken each year. Only years for which complete data was available are plotted.}
 \label{rides_vs_year}
 \end{figure}
 
-\begin{figure}[htbp]
+\begin{figure}[htb]
 \includegraphics[width=40pc]{rides_per_month_each_year.jpg}
 \caption{Total number of rides taken each month, for different years.}
 \label{rides_vs_month_eachyear}
 \end{figure}
 
-\begin{figure}[htbp]
+\begin{figure}[htb]
 \includegraphics[width=40pc]{rides_per_month.jpg}
 \caption{Total number of rides taken per month, plotted consecutively for 2014-2016.}
 \label{rides_vs_month}
@@ -169,7 +169,7 @@ Findings:
 
 % number of stations
 
-\begin{figure}[htbp]
+\begin{figure}[htb]
 \includegraphics[width=40pc]{rides_vs_stations.pdf}
 \caption{Total number of rides vs the number of stations.}
 \label{rides_vs_stations}
@@ -178,13 +178,13 @@ Findings:
 
 
 
-\begin{figure}[htbp]
+\begin{figure}[htb]
 \includegraphics[width=40pc]{rides_per_hour_weekdays.jpg}
 \caption{Total number of rides taken each hour of day, for weekdays (Monday-Friday).}
 \label{rides_vs_hr_wkday}
 \end{figure}
 
-\begin{figure}[htbp]
+\begin{figure}[htb]
 \includegraphics[width=40pc]{rides_per_hour_weekends.jpg}
 \caption{Total number of rides taken each hour of day, for weekend days (Saturday and Sunday).}
 \label{rides_vs_hr_wkend}
@@ -198,28 +198,77 @@ Findings:
 \end{figure}
 
 
+\clearpage
+\subsection{Weather}
 
-\subsection{Relationship with Weather}
 
-
+\clearpage
 \subsubsection{Temperature}
 
 The daily number of rides is postitively correlated with temperature (Figure \ref{rides_vs_temp}). This makes sense; anyone who has ridden a bike knows it is much more enjoyable when it's not freezing! A linear regression for 2015 data gives an $R^2$ of $0.62$. It appears that there is a lot more variance for temperatures above 50$^o$; this is something to look into further. I think this may be partly due to added stations in mid 2016.
 
 
 \begin{figure}[h]
-\includegraphics[width=40pc]{rides_vs_temp_2015.pdf}
-\caption{Total number of rides vs temperature in 2015.}
-\label{rides_vs_temp}
+\includegraphics[width=40pc]{temp_vs_date.pdf}
+\caption{Daily mean temperature (F).}
+\label{temps}
 \end{figure}
 
 
+%\begin{figure}[h]
+%\includegraphics[width=40pc]{rides_vs_temp_2015.pdf}
+%\caption{Total number of rides vs temperature in 2015.}
+%\label{rides_vs_temp}
+%\end{figure}
+
+\begin{figure}[h]
+\includegraphics[width=40pc]{rides_vs_temp_all.pdf}
+\caption{Rides vs Temp}
+\label{}
+\end{figure}
+
+
+
+
+\clearpage
 \subsubsection{Precipitation}
 
 
+\begin{figure}[h]
+\includegraphics[width=40pc]{precip_vs_date.pdf}
+\caption{Precipitation (inches).}
+\label{precip}
+\end{figure}
+
+\begin{figure}[h]
+\includegraphics[width=40pc]{rides_vs_precip_all.pdf}
+\caption{Rides vs precip}
+\label{}
+\end{figure}
 
 
 
+
+
+
+\clearpage
+\subsubsection{Wind Gust}
+
+\begin{figure}[h]
+\includegraphics[width=40pc]{wind_vs_date.pdf}
+\caption{Max wind gust (mph).}
+\label{wind}
+\end{figure}
+
+\begin{figure}[h]
+\includegraphics[width=40pc]{rides_vs_wind_all.pdf}
+\caption{Rides vs max wind gust}
+\label{}
+\end{figure}
+
+
+
+\clearpage
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 \section{Regression Model}
 
@@ -241,17 +290,17 @@ At this point in the project, I have the following conclusions:
 
 \item An important factor which I did not anticipate before doing the analysis is the changing number of stations and bikes, which essentially raises the baseline level of rides. This needs to be accounted for when trying to diagnose the effect of other variables such as temperature.
 
-\item The number of rides is positvely correlated with the daily mean temperature. A linear regression 
+\item The number of rides is positvely correlated with the daily mean temperature. A simple linear regression between the two gives a $R^2$ of $xxx$.
+
+\item Number of rides is negatively correlated with precipitation and max wind gust.
+
 
 \end{itemize}
-
 
 Plan:
 
 \begin{itemize}
-\item Look at other weather variables such as rain, clouds, etc;
-\item Build regression model to try to predict number of rides.
-\item 
+\item Build regression model to try to determine what features affect the number of rides, and predict the number of rides based on these features.
 \end{itemize}
 
 
