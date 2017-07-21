@@ -15,7 +15,7 @@
 {/Users/Andy/Springboard_DataScience/Capstone_1/figures/}
 }
 
-\title{Capstone 1 Milestone Report - Analyzing NYC Citibke Usage}
+\title{Capstone 1 Milestone Report - Analyzing NYC Citibike Usage}
 \author{Andy Pickering}
 %\date{}                                           % Activate to display a given date or no date
 
@@ -32,7 +32,7 @@
 \section{Introduction}
 
 For my first capstone project, I chose to analyze data from the NYC Citibike bike-rental system.
-The problem is to develop a model to predict the number of rides taken each day on the Citibike system. The main client is the Citibike management, who need to plan for anticipated demand and ensure that there are enough working bikes and staff on hand to meet the demand. Other clients could include city transportation departments, since bike usage likely affects ridership on other modes of transportation, as well as possibly introducing traffic issues. A more ambitious goal is to predict bike demand and availability at specific stations, to determine the most efficient distribution of bikes. 
+The problem is to determine which factors impact usage, and develop a model to predict the number of rides taken each day on the Citibike system. The main client is the Citibike management, who need to plan for anticipated demand and ensure that there are enough working bikes and staff on hand to meet the demand. Other clients could include city transportation departments, since bike usage likely affects ridership on other modes of transportation, as well as possibly introducing traffic issues. A more ambitious goal is to predict bike demand and availability at specific stations, to determine the most efficient distribution of bikes. 
 
 
 
@@ -59,10 +59,7 @@ The main dataset is historical records of trips taken on the Citibike system. Th
 \item Year of Birth
 \end{itemize}
 
-Station-related variables except id (name, lat,long ) are not saved in the table with ride data, in order to reduce the size. A separate table 'stations' is made with the info for unique stations, which can be joined to the 'rides' table using the station ID key if needed.
-
-Upon examining the rider age distribution, there appear to be a small number of incorrect values or typos. A very small fraction of riders have ages over 100, up to 159!. Since the oldest living person is 116 it seems likely that these are mistakes in the data. Birth year, not age, was recorded, so my best guess is that 18 was intered instead of 19 for the beginning of some years (ie 1895 instead of 1995). These age values will be converted to NaN in the dataset.
-
+Upon examining the rider age distribution, there appear to be a small number of incorrect values or typos. A very small fraction of riders have ages over 100, up to 159!. Since the oldest living person is 117 (\url{https://en.wikipedia.org/wiki/List_of_the_verified_oldest_people}) it seems likely that these are mistakes in the data. Birth year, not age, was recorded, so my best guess is that 18 was intered instead of 19 for the beginning of some years (ie 1895 instead of 1995). These age values will be converted to NaN in the dataset.
 
 
 
@@ -98,19 +95,13 @@ Historical data does not include station status (number of bikes available etc).
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 \section{Data cleaning and wrangling}
 
-A deeper dive into the data set:
-What important fields and information does the data set have?
-What are its limitations i.e. what are some questions that you cannot answer with this data set?
-What kind of cleaning and wrangling did you need to do?
-Are there other datasets you can find, use and combine with, to answer the questions that matter?
-
-The combined historical citibike data was very big; therefore I decided to store the data in a sqlite3 database and then query the database from python for analysis. A python script (\verb+read_citibike_to_sql.+) was used to perform some cleaning and modification of the data and write it to the database. Cleaning/modifications performed on the historical data include:
+The combined historical citibike data was very large: more than 39 million rows (rides).  Therefore I decided to store the data in a sqlite3 database and then query the database from python for analysis. A python script (\verb+read_citibike_to_sql.+) was used to perform some cleaning and modification of the data and write it to the database. Redundant station-related variables (name, lat, long ) are not saved in the table with ride data, in order to reduce the size. A separate table 'stations' is made with the info for unique stations, which can be joined to the 'rides' table using the station ID key if needed. Cleaning/modifications performed on the historical data include:
 
 \begin{itemize}
 \item Replacing spaces in variable names w/ underscores
 \item Converting date fields to appropriate data types
 \item Add variables such as year,month, and day to the dataframe
-\item Converting variables x,x to categorical data type
+\item Converting variables to categorical data type
 \end{itemize}
 
 
@@ -120,18 +111,17 @@ The combined historical citibike data was very big; therefore I decided to store
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 \section{Analysis}
 
-Any preliminary exploration you’ve performed and your initial findings. Test the hypotheses one at a time. Often, the data story emerges as a result of a sequence of testing hypothesis e.g. You first tested if X was true, and because it wasn't, you tried Y, which turned out to be true.
 
 
 \subsection{Citibike Usage}
 
-I began with an exploratory analysis of the data and patterns of ridership.
+I began with an exploratory analysis of the data and patterns of ridership. The dataset contains 39,148,013 rides! 
 
 Findings:
 
 \begin{itemize}
 
-\item Ridership has increased over the 3 years (Figure \ref{rides_vs_year}).
+\item Ridership has increased over the 3 years (Figure \ref{rides_vs_year}).%, from xx in 2014 to xx in 2016.
 
 \item  Part of this increase is due to expanasions of the system, increasing the number of stations and bikes. (Figure \ref{rides_vs_stations}). I computed the number of stations each month as the number of unique station IDs in all the rides during that time. Note this only includes stations that were actually used; I assume every available station was used at least once, although the actual number of stations could be slightly different. I think it is close enough to account for the majority of this effect though.
 
@@ -139,12 +129,11 @@ Findings:
 
 \item Daily cycle: During the week, the majority of rides take place during the morning and evening rush hours (Figure \ref{rides_vs_hr_wkday}). On the weekend, rides are more distributed throughout the day (Figure \ref{rides_vs_hr_wkend}).
 
-\item A quick map examination of the most used stations showed that during the week, there are several stations close to mass transit such as Grand Central Stations?. On weekends, those stations are not most used; and several of the most used stations are now located near Central Park. This adds further evidence to the pattern of commuting during the week and recreational riding on weekends.
+\item A quick map examination (not shown) of the most used stations showed that during the week, there are several stations close to mass transit such as Grand Central Stations. On weekends, those stations are not most used; and several of the most used stations are now located near Central Park. This adds further evidence to the pattern of commuting during the week and recreational riding on weekends.
 
 \item The avearage duration of rides is longer on the weekend. A t-test found this difference is statistically significant.
 
 \end{itemize}
-
 
 
 
@@ -198,6 +187,7 @@ Findings:
 \end{figure}
 
 
+
 \clearpage
 \subsection{Weather}
 
@@ -224,7 +214,7 @@ The daily number of rides is postitively correlated with temperature (Figure \re
 \begin{figure}[h]
 \includegraphics[width=40pc]{rides_vs_temp_all.pdf}
 \caption{Rides vs Temp}
-\label{}
+\label{rides_vs_temp}
 \end{figure}
 
 
@@ -233,6 +223,7 @@ The daily number of rides is postitively correlated with temperature (Figure \re
 \clearpage
 \subsubsection{Precipitation}
 
+Number of rides is negatively corelated w/ precipitation (Figure \ref{rides_vs_precip}).
 
 \begin{figure}[h]
 \includegraphics[width=40pc]{precip_vs_date.pdf}
@@ -243,7 +234,7 @@ The daily number of rides is postitively correlated with temperature (Figure \re
 \begin{figure}[h]
 \includegraphics[width=40pc]{rides_vs_precip_all.pdf}
 \caption{Rides vs precip}
-\label{}
+\label{rides_vs_precip}
 \end{figure}
 
 
@@ -254,6 +245,9 @@ The daily number of rides is postitively correlated with temperature (Figure \re
 \clearpage
 \subsubsection{Wind Gust}
 
+Number of rides is negatively corelated w/ wind (Figure \ref{rides_vs_wind}).
+
+
 \begin{figure}[h]
 \includegraphics[width=40pc]{wind_vs_date.pdf}
 \caption{Max wind gust (mph).}
@@ -263,22 +257,56 @@ The daily number of rides is postitively correlated with temperature (Figure \re
 \begin{figure}[h]
 \includegraphics[width=40pc]{rides_vs_wind_all.pdf}
 \caption{Rides vs max wind gust}
-\label{}
+\label{rides_vs_wind}
 \end{figure}
 
+
+
+\begin{figure}[h]
+\includegraphics[width=40pc]{rides_weather_corrplot.pdf}
+\caption{Correlations between daily number of rides and weather variables.}
+\label{rides_wea_corr}
+\end{figure}
 
 
 \clearpage
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 \section{Regression Model}
 
+I have begun building a regression model with the goal of predicting the daily number of rides taken. Data from 2016 were randomly split into training (70\%) and test (30\%) sets. I first tried a linear regression with the following features: day of week, number of stations, mean temperature, precipitation, max wind gust, and cloud cover. Day of week was converted to dummy variables. This gave an $R^2=0.78$ on the test set.
+
+Examination of the residuals from this model indicated that some of the larger residuals were likely associated with holidays such as Thanksgiving and Christmas (Figure \ref{resids_holi_2016}). Adding holidays (yes/no) to the linear regression did not improve the model performance much.
+
+I then tried a random forest regressor, optimized w/ GridsearchCV. This achieved an improved $R^2=0.87$, and improved the residuals (Figure \ref{linreg_rf_resids_2016}).
+
+\begin{figure}[h]
+\includegraphics[width=40pc]{reg_vs_actual_2016_timeseries.pdf}
+\caption{Predictions from linear regression (no holidays) and actual values for 2016.}
+\label{}
+\end{figure}
 
 
 
 
+\begin{figure}[h]
+\includegraphics[width=40pc]{2016_linreg_resids_holi_timeseries.pdf}
+\caption{Residuals from linear regression (no holidays) for 2016. Vertical lines indicate holidays.}
+\label{resids_holi_2016}
+\end{figure}
 
 
 
+
+\begin{figure}[h]
+\includegraphics[width=40pc]{2016_resids_lin_rf_timeseries.pdf}
+\caption{Residuals from linear model and random forest regressor for 2016.}
+\label{linreg_rf_resids_2016}
+\end{figure}
+
+
+
+
+\clearpage
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 \section{Conclusions and Plan}
 
@@ -290,17 +318,26 @@ At this point in the project, I have the following conclusions:
 
 \item An important factor which I did not anticipate before doing the analysis is the changing number of stations and bikes, which essentially raises the baseline level of rides. This needs to be accounted for when trying to diagnose the effect of other variables such as temperature.
 
-\item The number of rides is positvely correlated with the daily mean temperature. A simple linear regression between the two gives a $R^2$ of $xxx$.
+\item The number of rides is positvely correlated with the daily mean temperature.% A simple linear regression between the two gives a $R^2$ of $xxx$.
 
-\item Number of rides is negatively correlated with precipitation and max wind gust.
+\item Number of rides is negatively correlated with precipitation and max wind gust.%, with $R^2$ values of xx and xx respectively.
 
+\item A random forest regressor looks promising, with a $R^2=0.87$ on the test set for 2016.
 
 \end{itemize}
 
 Plan:
 
 \begin{itemize}
-\item Build regression model to try to determine what features affect the number of rides, and predict the number of rides based on these features.
+
+\item Continue working on regression model to try to determine what features affect the number of rides, and predict the number of rides based on these features. 
+
+\item Use all data in regression. Try splitting based on time, not just randomly.
+
+\item Create slide deck/presentation of results.
+
+\item Clean and organize final code to reproduce analysis.
+
 \end{itemize}
 
 
